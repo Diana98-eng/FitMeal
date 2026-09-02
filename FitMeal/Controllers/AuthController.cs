@@ -65,7 +65,9 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginDto dto)
     {
-        var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == dto.Email);
+        var usuario = _context.Usuarios
+    .FirstOrDefault(u =>
+        u.Email.Trim().ToLower() == dto.Email.Trim().ToLower());
 
         if (usuario == null)
         {
