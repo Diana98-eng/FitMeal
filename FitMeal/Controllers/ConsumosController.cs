@@ -128,7 +128,7 @@ public class ConsumosController : ControllerBase
 
             Calorias = calorias,
 
-            Fecha = DateTime.Now
+            Fecha = DateTime.UtcNow
 
         };
 
@@ -167,7 +167,7 @@ public class ConsumosController : ControllerBase
             return Unauthorized("Usuario no autenticado.");
         }
 
-        var hoy = DateTime.Today;
+        var hoy = DateTime.UtcNow.Date;
         var mañana = hoy.AddDays(1);
 
         var consumos = await _context.Consumos
