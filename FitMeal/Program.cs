@@ -25,13 +25,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-    Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+        ),
         ValidateIssuer = false,
         ValidateAudience = false,
-        ValidateLifetime = true
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.FromMinutes(1)
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine(
+                $"JWT ERROR: {context.Exception.Message}"
+            );
+
+            return Task.CompletedTask;
+        }
     };
 });
-
 
 // Add services to the container.
 
