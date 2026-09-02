@@ -51,6 +51,16 @@ public class EmailService
             null
         );
 
-        await client.SendEmailAsync(msg);
+        var response = await client.SendEmailAsync(msg);
+
+        Console.WriteLine($"SENDGRID STATUS: {response.StatusCode}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var body = await response.Body.ReadAsStringAsync();
+            Console.WriteLine($"SENDGRID ERROR: {body}");
+
+            throw new Exception($"SendGrid error: {response.StatusCode}");
+        }
     }
 }
