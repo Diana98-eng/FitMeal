@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String baseUrl = 'https://10.0.2.2:7000';
+  static const String baseUrl = 'https://fitmeal-kq25.onrender.com';
   
   static Future<bool> registrarUsuario({
   required String nombre,

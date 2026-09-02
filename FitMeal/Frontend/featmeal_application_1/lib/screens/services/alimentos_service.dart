@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AlimentosService {
-  static const String baseUrl = 'https://10.0.2.2:7000';
+  static const String baseUrl = 'https://fitmeal-kq25.onrender.com';
 
   static Future<List<dynamic>> buscarAlimentos(String nombre) async {
   final response = await http.get(

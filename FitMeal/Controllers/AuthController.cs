@@ -125,7 +125,7 @@ new Claim(ClaimTypes.Name, usuario.Nombre)
      SolicitarRecuperacionDto dto)
     {
         var usuario = _context.Usuarios
-            .FirstOrDefault(u => u.Email == dto.Email);
+    .FirstOrDefault(u => u.Email.Trim().ToLower() == dto.Email.Trim().ToLower());
 
         if (usuario == null)
         {
@@ -135,7 +135,7 @@ new Claim(ClaimTypes.Name, usuario.Nombre)
         var codigo = new Random().Next(100000, 999999).ToString();
 
         usuario.CodigoRecuperacion = codigo;
-        usuario.CodigoRecuperacionExpira = DateTime.Now.AddMinutes(10);
+        usuario.CodigoRecuperacionExpira = DateTime.UtcNow.AddMinutes(10);
 
         _context.SaveChanges();
 
