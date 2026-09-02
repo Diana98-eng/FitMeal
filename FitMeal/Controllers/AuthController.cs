@@ -22,14 +22,16 @@ public class AuthController : ControllerBase
     private readonly FitMealDbContext _context;
     private readonly PasswordHasher<Usuario> _passwordHasher;
     private readonly EmailService _emailService;
-
+    private readonly IConfiguration _configuration;
     public AuthController(
-        FitMealDbContext context,
-        EmailService emailService)
+     FitMealDbContext context,
+     EmailService emailService,
+     IConfiguration configuration)
     {
         _context = context;
         _passwordHasher = new PasswordHasher<Usuario>();
         _emailService = emailService;
+        _configuration = configuration;
     }
 
     [HttpPost("register")]
@@ -93,9 +95,8 @@ new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
 new Claim(ClaimTypes.Email, usuario.Email),
 new Claim(ClaimTypes.Name, usuario.Nombre)
 };
-
         var key = new SymmetricSecurityKey(
-       Encoding.UTF8.GetBytes("FitMealClaveSuperSegura2026MVP123!")
+            Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
         );
 
         var credentials = new SigningCredentials(
